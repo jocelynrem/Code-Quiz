@@ -83,30 +83,48 @@ function clearStatusClass(element) {
 
 var questions = [
   {
-    question: "What is 2 + 2?",
+    question: "Commonly used Data Types do not include:",
     answers: [
-      { text: "4", correct: true },
-      { text: "22", correct: false },
-      { text: "5", correct: false },
-      { text: "2", correct: false },
+      { text: "Strings", correct: false },
+      { text: "Booleans", correct: false },
+      { text: "Alerts", correct: true },
+      { text: "Numbers", correct: false },
     ],
   },
   {
-    question: "What is 2 + 5?",
+    question: "The condition in an if/else statement is enclosed within _______.?",
     answers: [
-      { text: "3", correct: false },
-      { text: "7", correct: true },
-      { text: "9", correct: false },
-      { text: "6", correct: false },
+      { text: "Quotes", correct: false },
+      { text: "Curly brackets", correct: true },
+      { text: "Parenthesis", correct: false },
+      { text: "Square brackets", correct: false },
     ],
   },
   {
-    question: "What is 4 + 2?",
+    question: "Arrays in JavaScript can be used to store _____.",
     answers: [
-      { text: "3", correct: false },
-      { text: "7", correct: false },
-      { text: "9", correct: false },
-      { text: "6", correct: true },
+      { text: "Numbers and strings", correct: false },
+      { text: "Other arrays", correct: false },
+      { text: "Booleans", correct: false },
+      { text: "All of the above", correct: true },
+    ],
+  },
+  {
+    question: "String values must be enclosed within _______ when being assigned to variables.",
+    answers: [
+      { text: "Commas", correct: false },
+      { text: "Curly Brackets", correct: false },
+      { text: "Quotes", correct: true },
+      { text: "Parenthesis", correct: false },
+    ],
+  },
+  {
+    question: "A very useful tool used during development and debugging for printing and testing content is:",
+    answers: [
+      { text: "JavaScript", correct: false },
+      { text: "Terminal/Bash", correct: false },
+      { text: "For Loops", correct: false },
+      { text: "Console.log", correct: true },
     ],
   },
 ];

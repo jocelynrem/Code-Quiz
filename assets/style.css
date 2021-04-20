@@ -21,6 +21,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: hsl(var(--hue), 100%, 20%);
+  font-size: 24px;
 }
 
 body.correct {
@@ -52,9 +53,9 @@ body.wrong {
   border: 2px solid hsl(var(--hue), 100%, 30%);
   background-color: hsl(var(--hue), 100%, 50%);
   border-radius: 5px;
-  padding: 5px 10px;
-  /* color: white; */
+  padding: 5px;
   outline: none;
+  font-size: 20px;
 }
 
 .btn:hover {
