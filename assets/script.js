@@ -9,7 +9,7 @@ var shuffledQuestions, currentQuestionIndex;
 var countRightAnswers = 0;
 var rightAns = document.getElementById("right-answers");
 var score = document.getElementById("score");
-timer.textContent = "Seconds Remaining: 60";
+timer.textContent = "Seconds Remaining: 30";
 rightAns.textContent = "Correct Answers: " + countRightAnswers;
 
 function countDown() {
@@ -30,15 +30,6 @@ function countDown() {
   }, 1000);
 }
 
-function endGame() {
-  questionEl.classList.add("hide");
-  nextButton.classList.add("hide");
-  answerBtnEl.classList.add("hide");
-  score.classList.remove("hide");
-  endMessage.innerHTML = "Game Over";
-  score.innerText = "Your score: " + countRightAnswers + " out of 5";
-}
-
 startButton.addEventListener("click", startGame);
 startButton.addEventListener("click", countDown);
 nextButton.addEventListener("click", () => {
@@ -47,13 +38,29 @@ nextButton.addEventListener("click", () => {
 });
 
 function startGame() {
+  countRightAnswers = 0;
+  rightAns.textContent = "Correct Answers: " + countRightAnswers;
   endMessage.classList.add("hide");
   score.classList.add("hide");
   startButton.classList.add("hide");
   shuffledQuestions = questions.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
   questionContainerEl.classList.remove("hide");
+  nextButton.classList.remove("hide");
+  answerBtnEl.classList.remove("hide");
   setNextQuestion();
+}
+
+function endGame() {
+  questionEl.classList.add("hide");
+  nextButton.classList.add("hide");
+  answerBtnEl.classList.add("hide");
+  endMessage.classList.remove("hide");
+  score.classList.remove("hide");
+  endMessage.innerText = "Game Over";
+  score.innerText = "Your score: " + countRightAnswers + " out of 5";
+  startButton.innerText = "Restart";
+  startButton.classList.remove("hide");
 }
 
 function setNextQuestion() {
@@ -75,11 +82,6 @@ function showQuestion(question) {
   });
 }
 
-// when user clicks an answer:
-//hide all answers but the correct answer
-// flash message indicating if user was right or wrong
-//wait __ seconds and automatically move on to the next question
-// or user can click the next button to move on faster
 function resetState() {
   clearStatusClass(document.body);
   nextButton.classList.add("hide");

@@ -11,6 +11,7 @@
   --gray: #ccc;
   --green: #14a098;
   --dark: #0f292f;
+  font-size: 62.5%;
 }
 
 body {
@@ -22,7 +23,6 @@ body {
   justify-content: center;
   align-items: center;
   background-color: var(--dark);
-  font-size: 24px;
 }
 
 .container {
@@ -38,37 +38,32 @@ body {
   text-align: right;
   padding: 5px 20px 40px 0px;
   color: var(--pink);
+  font-size: 2.5rem;
 }
 
 #timer {
   text-align: right;
   color: var(--green);
   margin-right: 20px;
+  font-size: 2.5rem;
 }
 
 #question {
   padding: 0 20px 40px 20px;
-  font-size: 28px;
+  font-size: 3rem;
 }
 
 #endMessage {
-  display: flex;
   text-align: center;
   color: black;
-  /* padding-bottom: 50px; */
-  justify-content: center;
-  align-items: center;
-  font-size: 50px;
+  font-size: 5rem;
 }
 
 #score {
-  display: flex;
   text-align: center;
   color: black;
   padding-bottom: 50px;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
+  font-size: 3rem;
 }
 
 .btn-grid {
@@ -85,7 +80,7 @@ body {
   border-radius: 5px;
   padding: 15px 5px;
   outline: none;
-  font-size: 20px;
+  font-size: 2rem;
 }
 
 .btn:hover {
@@ -104,7 +99,7 @@ body {
 
 .start-btn,
 .next-btn {
-  font-size: 30px;
+  font-size: 3rem;
   padding: 10px 60px;
   border: black;
 }
