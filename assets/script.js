@@ -9,11 +9,30 @@ var shuffledQuestions, currentQuestionIndex;
 var countRightAnswers = 0;
 var rightAns = document.getElementById("right-answers");
 var score = document.getElementById("score");
+var timeLeft = 30;
+
+//timer and score display all the time
 timer.textContent = "Seconds Remaining: 30";
 rightAns.textContent = "Correct Answers: " + countRightAnswers;
 
+//start and restart 
+function startGame() {
+  timeLeft = 30;
+  countRightAnswers = 0;
+  rightAns.textContent = "Correct Answers: " + countRightAnswers;
+  endMessage.classList.add("hide");
+  score.classList.add("hide");
+  startButton.classList.add("hide");
+  shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+  currentQuestionIndex = 0;
+  questionContainerEl.classList.remove("hide");
+  nextButton.classList.remove("hide");
+  answerBtnEl.classList.remove("hide");
+  setNextQuestion();
+}
+
+//countdown timer and interval
 function countDown() {
-  var timeLeft = 5;
 
   var timerInterval = setInterval(function () {
     if (timeLeft > 1) {
@@ -30,6 +49,7 @@ function countDown() {
   }, 1000);
 }
 
+//click events
 startButton.addEventListener("click", startGame);
 startButton.addEventListener("click", countDown);
 nextButton.addEventListener("click", () => {
@@ -37,32 +57,27 @@ nextButton.addEventListener("click", () => {
   setNextQuestion();
 });
 
-function startGame() {
-  countRightAnswers = 0;
-  rightAns.textContent = "Correct Answers: " + countRightAnswers;
-  endMessage.classList.add("hide");
-  score.classList.add("hide");
-  startButton.classList.add("hide");
-  shuffledQuestions = questions.sort(() => Math.random() - 0.5);
-  currentQuestionIndex = 0;
-  questionContainerEl.classList.remove("hide");
-  nextButton.classList.remove("hide");
-  answerBtnEl.classList.remove("hide");
-  setNextQuestion();
-}
 
+//end game 
 function endGame() {
+  timeLeft = 0;
   questionEl.classList.add("hide");
   nextButton.classList.add("hide");
   answerBtnEl.classList.add("hide");
   endMessage.classList.remove("hide");
   score.classList.remove("hide");
-  endMessage.innerText = "Game Over";
+  
+  if (countRightAnswers === 5) {
+    endMessage.innerText = "Perfect Score!";
+  } else {
+    endMessage.innerText = "Game Over";
+  }
   score.innerText = "Your score: " + countRightAnswers + " out of 5";
   startButton.innerText = "Restart";
   startButton.classList.remove("hide");
 }
 
+//functions that control the gameplay
 function setNextQuestion() {
   resetState();
   showQuestion(shuffledQuestions[currentQuestionIndex]);
@@ -90,6 +105,7 @@ function resetState() {
   }
 }
 
+//counts correct answers, moves to next question if available or ends game
 function selectAnswer(e) {
   var selectedButton = e.target;
   var correct = selectedButton.dataset.correct;
@@ -97,10 +113,11 @@ function selectAnswer(e) {
   Array.from(answerBtnEl.children).forEach((button) => {
     setStatusClass(button, button.dataset.correct);
   });
-
   if (correct) {
     countRightAnswers++;
     rightAns.textContent = "Correct Answers: " + countRightAnswers;
+  } else {
+    timeLeft -= 5;
   }
   if (shuffledQuestions.length > currentQuestionIndex + 1) {
     nextButton.classList.remove("hide");
@@ -109,6 +126,7 @@ function selectAnswer(e) {
   }
 }
 
+//what happens when a user chooses an answer
 function setStatusClass(element, correct) {
   clearStatusClass(element);
   if (correct) {
@@ -120,12 +138,14 @@ function setStatusClass(element, correct) {
   }
 }
 
+//resets buttons for next question
 function clearStatusClass(element) {
   element.classList.remove("correct");
   element.classList.remove("wrong");
   questionEl.classList.remove("hide");
 }
 
+//quiz questions array
 var questions = [
   {
     question: "Which is not a commonly used data type:",
