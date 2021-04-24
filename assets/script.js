@@ -8,11 +8,12 @@ var endMessage = document.getElementById("endMessage");
 var shuffledQuestions, currentQuestionIndex;
 var countRightAnswers = 0;
 var rightAns = document.getElementById("right-answers");
+var score = document.getElementById("score");
 timer.textContent = "Seconds Remaining: 60";
 rightAns.textContent = "Correct Answers: " + countRightAnswers;
 
 function countDown() {
-  var timeLeft = 60;
+  var timeLeft = 5;
 
   var timerInterval = setInterval(function () {
     if (timeLeft > 1) {
@@ -33,7 +34,9 @@ function endGame() {
   questionEl.classList.add("hide");
   nextButton.classList.add("hide");
   answerBtnEl.classList.add("hide");
-  endMessage.textContent = "Time is up!";
+  score.classList.remove("hide");
+  endMessage.innerHTML = "Game Over";
+  score.innerText = "Your score: " + countRightAnswers + " out of 5";
 }
 
 startButton.addEventListener("click", startGame);
@@ -45,6 +48,7 @@ nextButton.addEventListener("click", () => {
 
 function startGame() {
   endMessage.classList.add("hide");
+  score.classList.add("hide");
   startButton.classList.add("hide");
   shuffledQuestions = questions.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
@@ -91,16 +95,15 @@ function selectAnswer(e) {
   Array.from(answerBtnEl.children).forEach((button) => {
     setStatusClass(button, button.dataset.correct);
   });
-  if (shuffledQuestions.length > currentQuestionIndex + 1) {
-    nextButton.classList.remove("hide");
-  } else {
-    startButton.innerText = "Restart";
-    startButton.classList.remove("hide");
-  }
 
   if (correct) {
     countRightAnswers++;
     rightAns.textContent = "Correct Answers: " + countRightAnswers;
+  }
+  if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    nextButton.classList.remove("hide");
+  } else {
+    endGame();
   }
 }
 
@@ -108,16 +111,17 @@ function setStatusClass(element, correct) {
   clearStatusClass(element);
   if (correct) {
     element.classList.add("correct");
-    questionEl.textContent = "Correct!";
+    questionEl.classList.add("hide");
   } else {
-    // element.classList.add("wrong");
-    questionEl.textContent = "Wrong Answer";
+    element.classList.add("wrong");
+    questionEl.classList.add("hide");
   }
 }
 
 function clearStatusClass(element) {
   element.classList.remove("correct");
-  // element.classList.remove("wrong");
+  element.classList.remove("wrong");
+  questionEl.classList.remove("hide");
 }
 
 var questions = [

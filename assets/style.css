@@ -53,11 +53,22 @@ body {
 
 #endMessage {
   display: flex;
+  text-align: center;
+  color: black;
+  /* padding-bottom: 50px; */
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+}
+
+#score {
+  display: flex;
+  text-align: center;
   color: black;
   padding-bottom: 50px;
   justify-content: center;
   align-items: center;
-  font-size: 50px;
+  font-size: 30px;
 }
 
 .btn-grid {
@@ -88,6 +99,7 @@ body {
 
 .btn.wrong {
   background-color: var(--purple);
+  color: var(--purple);
 }
 
 .start-btn,
