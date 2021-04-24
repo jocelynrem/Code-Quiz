@@ -3,17 +3,52 @@ var nextButton = document.getElementById("next-btn");
 var questionContainerEl = document.getElementById("question-container");
 var questionEl = document.getElementById("question");
 var answerBtnEl = document.getElementById("answer-buttons");
+var timer = document.getElementById("timer");
+var endMessage = document.getElementById('endMessage');
 var shuffledQuestions, currentQuestionIndex;
 var countRightAnswers = 0;
+var rightAns = document.getElementById('right-answers');
+timer.textContent = 'Seconds Remaining: 60';
+rightAns.textContent = "Correct Answers: " + countRightAnswers;
+
+
+function countDown () {
+  var timeLeft = 60;
+  
+  var timerInterval = setInterval(function () {
+    if (timeLeft > 1) {
+      timer.textContent = 'Seconds Remaining: '+ timeLeft;
+      timeLeft--;
+    } else if (timeLeft === 1) {
+      timer.textContent = 'Second Remaining: ' + timeLeft;
+      timeLeft--
+    } else {
+      timer.textContent = 'Seconds Remaining: 0';
+      clearInterval(timerInterval);
+      endGame();
+    }
+  }, 1000);
+}
+
+function endGame() {
+  questionEl.classList.add('hide');
+  nextButton.classList.add('hide');
+  answerBtnEl.classList.add('hide');
+  endMessage.textContent = "Time is up!"
+  
+  
+}
+
 
 startButton.addEventListener("click", startGame);
+startButton.addEventListener("click", countDown);
 nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
   setNextQuestion();
 });
 
 function startGame() {
-  countRightAnswers = 0;
+  endMessage.classList.add("hide");
   startButton.classList.add("hide");
   shuffledQuestions = questions.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
@@ -40,6 +75,11 @@ function showQuestion(question) {
   });
 }
 
+// when user clicks an answer:
+//hide all answers but the correct answer
+// flash message indicating if user was right or wrong
+//wait __ seconds and automatically move on to the next question
+// or user can click the next button to move on faster
 function resetState() {
   clearStatusClass(document.body);
   nextButton.classList.add("hide");
@@ -61,29 +101,33 @@ function selectAnswer(e) {
     startButton.innerText = "Restart";
     startButton.classList.remove("hide");
   }
-  if(selectedButton.dataset = correct) {
-      countRightAnswers++;
+  
+  if (correct) {
+    countRightAnswers++;
+    rightAns.textContent = "Correct Answers: " + countRightAnswers;
   }
-  document.getElementById('right-answers').innerText = "Correct Answers: " + countRightAnswers;
 }
+
 
 function setStatusClass(element, correct) {
   clearStatusClass(element);
   if (correct) {
     element.classList.add("correct");
+    questionEl.textContent = "Correct!"
   } else {
-    element.classList.add("wrong");
+    // element.classList.add("wrong");
+    questionEl.textContent = "Wrong Answer"
   }
 }
 
 function clearStatusClass(element) {
   element.classList.remove("correct");
-  element.classList.remove("wrong");
+  // element.classList.remove("wrong");
 }
 
 var questions = [
   {
-    question: "Commonly used Data Types do not include:",
+    question: "Which is not a commonly used data type:",
     answers: [
       { text: "Strings", correct: false },
       { text: "Booleans", correct: false },
@@ -92,7 +136,7 @@ var questions = [
     ],
   },
   {
-    question: "The condition in an if/else statement is enclosed within _______.?",
+    question: "The condition in an if/else statement is enclosed within _______.",
     answers: [
       { text: "Quotes", correct: false },
       { text: "Curly brackets", correct: true },
@@ -119,7 +163,7 @@ var questions = [
     ],
   },
   {
-    question: "A very useful tool used during development and debugging for printing and testing content is:",
+    question: "A function used for printing and testing javascript is:",
     answers: [
       { text: "JavaScript", correct: false },
       { text: "Terminal/Bash", correct: false },
