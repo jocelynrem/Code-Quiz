@@ -4,26 +4,25 @@ var questionContainerEl = document.getElementById("question-container");
 var questionEl = document.getElementById("question");
 var answerBtnEl = document.getElementById("answer-buttons");
 var timer = document.getElementById("timer");
-var endMessage = document.getElementById('endMessage');
+var endMessage = document.getElementById("endMessage");
 var shuffledQuestions, currentQuestionIndex;
 var countRightAnswers = 0;
-var rightAns = document.getElementById('right-answers');
-timer.textContent = 'Seconds Remaining: 60';
+var rightAns = document.getElementById("right-answers");
+timer.textContent = "Seconds Remaining: 60";
 rightAns.textContent = "Correct Answers: " + countRightAnswers;
 
-
-function countDown () {
+function countDown() {
   var timeLeft = 60;
-  
+
   var timerInterval = setInterval(function () {
     if (timeLeft > 1) {
-      timer.textContent = 'Seconds Remaining: '+ timeLeft;
+      timer.textContent = "Seconds Remaining: " + timeLeft;
       timeLeft--;
     } else if (timeLeft === 1) {
-      timer.textContent = 'Second Remaining: ' + timeLeft;
-      timeLeft--
+      timer.textContent = "Second Remaining: " + timeLeft;
+      timeLeft--;
     } else {
-      timer.textContent = 'Seconds Remaining: 0';
+      timer.textContent = "Seconds Remaining: 0";
       clearInterval(timerInterval);
       endGame();
     }
@@ -31,14 +30,11 @@ function countDown () {
 }
 
 function endGame() {
-  questionEl.classList.add('hide');
-  nextButton.classList.add('hide');
-  answerBtnEl.classList.add('hide');
-  endMessage.textContent = "Time is up!"
-  
-  
+  questionEl.classList.add("hide");
+  nextButton.classList.add("hide");
+  answerBtnEl.classList.add("hide");
+  endMessage.textContent = "Time is up!";
 }
-
 
 startButton.addEventListener("click", startGame);
 startButton.addEventListener("click", countDown);
@@ -101,22 +97,21 @@ function selectAnswer(e) {
     startButton.innerText = "Restart";
     startButton.classList.remove("hide");
   }
-  
+
   if (correct) {
     countRightAnswers++;
     rightAns.textContent = "Correct Answers: " + countRightAnswers;
   }
 }
 
-
 function setStatusClass(element, correct) {
   clearStatusClass(element);
   if (correct) {
     element.classList.add("correct");
-    questionEl.textContent = "Correct!"
+    questionEl.textContent = "Correct!";
   } else {
     // element.classList.add("wrong");
-    questionEl.textContent = "Wrong Answer"
+    questionEl.textContent = "Wrong Answer";
   }
 }
 
@@ -136,7 +131,8 @@ var questions = [
     ],
   },
   {
-    question: "The condition in an if/else statement is enclosed within _______.",
+    question:
+      "The condition in an if/else statement is enclosed within _______.",
     answers: [
       { text: "Quotes", correct: false },
       { text: "Curly brackets", correct: true },
@@ -154,7 +150,8 @@ var questions = [
     ],
   },
   {
-    question: "String values must be enclosed within _______ when being assigned to variables.",
+    question:
+      "String values must be enclosed within _______ when being assigned to variables.",
     answers: [
       { text: "Commas", correct: false },
       { text: "Curly Brackets", correct: false },
