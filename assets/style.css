@@ -47,11 +47,11 @@ body {
   float: right;
   width: 20rem;
   height: 2.4rem;
-  border: 0.3rem solid var(--pink);
+  /* border: 0.2rem solid var(--pink); */
 }
 
 #progressBar {
-  height: 1.9rem;
+  height: 2.4rem;
   width: 0%;
   background-color: var(--pink);
   color:var(--gray);
@@ -84,10 +84,16 @@ ul {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: left;
   margin-bottom: 30px;
-  font-size: 2.2rem;
+  font-size: 3rem;
   color: var(--pink);
+  list-style: none;
+  padding-bottom: 30px;
+}
+
+.scoreList {
+  text-align: left;
+  padding: 1rem;
 }
 
 form {

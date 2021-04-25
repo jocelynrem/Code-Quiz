@@ -1,6 +1,6 @@
 var shuffledQuestions, currentQuestionIndex;
 var startButton = document.getElementById("start-btn");
-var saveButton = document.getElementById("scoreSave")
+var saveButton = document.getElementById("scoreSave");
 var questionContainerEl = document.getElementById("question-container");
 var questionEl = document.getElementById("question");
 var answerBtnEl = document.getElementById("answer-buttons");
@@ -9,29 +9,23 @@ var endMessage = document.getElementById("endMessage");
 var rightAns = document.getElementById("right-answers");
 var score = document.getElementById("score");
 var questStatus = document.getElementById("question-status");
-var statusBar = document.getElementById('progressBar');
-var scoreForm = document.getElementById('scoreForm');
-var initials = document.getElementById('initials');
-var recentScoresTitle = document.getElementById('recentScores');
-var recentScoresList = document.getElementById('recentScoresList');
-var highScores = JSON.parse(localStorage.getItem('recentScores'))  || [];
+var statusBar = document.getElementById("progressBar");
+var scoreForm = document.getElementById("scoreForm");
+var initials = document.getElementById("initials");
+var recentScoresTitle = document.getElementById("recentScores");
+var recentScoresList = document.getElementById("recentScoresList");
+var highScores = JSON.parse(localStorage.getItem("recentScores")) || [];
 var countQuestions = 0;
 var countRightAnswers = 0;
 var timeLeft = 30;
 
-recentScoresList.innerHTML = highScores
-  .map(recnScores => {
-  return`<li class="scoreList">${recnScores.initials}: ${recnScores.score}</li>`;
-})
-.join("");
+function removeHide(varEl) {
+  varEl.classList.remove("hide");
+}
 
-function removeHide (varEl) {
-  (varEl).classList.remove('hide');
-};
-
-function addHide (varEl) {
-  (varEl).classList.add('hide');
-};
+function addHide(varEl) {
+  varEl.classList.add("hide");
+}
 
 //timer and score display all the time
 timer.textContent = "Seconds Remaining: 30";
@@ -51,6 +45,8 @@ function startGame() {
   addHide(endMessage);
   addHide(score);
   addHide(startButton);
+  addHide(recentScoresList);
+  addHide(recentScoresTitle);
   removeHide(questStatus);
   removeHide(questionContainerEl);
   removeHide(answerBtnEl);
@@ -59,32 +55,33 @@ function startGame() {
 
 function saveScore(event) {
   event.preventDefault();
-  
+
   var endScore = {
     score: countRightAnswers,
     initials: initials.value,
   };
+
   highScores.push(endScore);
-  highScores.splice(4);
+  highScores.sort((a, b) => b.score - a.score);
+  highScores.shift;
+  highScores.splice(5);
   localStorage.setItem('recentScores', JSON.stringify(highScores));
+  recentScoresList.innerHTML = highScores
+    .map((recnScores) => {
+      return `<li class="scoreList">${recnScores.initials}: ${recnScores.score}</li>`;
+    })
+    .join("");
+
   addHide(endMessage);
   addHide(score);
   addHide(scoreForm);
   removeHide(recentScoresTitle);
   removeHide(recentScoresList);
-};
+}
 
 console.log('highScores:', highScores)
 
 //end game
-
-/* Still need to:
-save high score with initials
-create a high score function that:
-hides endMessage, score, and form 
-shows the high scores above the restart button 
-when user clicks on save score button */
-
 function endGame() {
   timeLeft = 0;
   addHide(questionEl);
@@ -135,10 +132,9 @@ answerBtnEl.addEventListener("click", () => {
   }
 });
 saveButton.addEventListener("click", saveScore);
-initials.addEventListener('keypress', () => {
+initials.addEventListener("keypress", () => {
   saveButton.disabled = !initials.value;
 });
-
 
 //functions that control the gameplay
 function setNextQuestion() {
