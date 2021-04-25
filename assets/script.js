@@ -8,26 +8,28 @@ var endMessage = document.getElementById("endMessage");
 var rightAns = document.getElementById("right-answers");
 var score = document.getElementById("score");
 var questStatus = document.getElementById("question-status");
+var statusBar = document.getElementById('progressBar');
 var countQuestions = 0;
 var countRightAnswers = 0;
 var timeLeft = 30;
 
+
 //timer and score display all the time
 timer.textContent = "Seconds Remaining: 30";
 rightAns.textContent = "Correct Answers: 0";
-questStatus.textContent = "0/5";
+statusBar.textContent = "0/5";
 
 //start and restart
 function startGame() {
   timeLeft = 30;
   countQuestions = 0;
   countRightAnswers = 0;
+  statusBar.style.width = `0%`;
   rightAns.textContent = "Correct Answers: " + countRightAnswers;
-  questStatus.textContent = countQuestions + "/5";
+  statusBar.textContent = countQuestions + "/5";
   endMessage.classList.add("hide");
   score.classList.add("hide");
   startButton.classList.add("hide");
-
   shuffledQuestions = questions.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
   questionContainerEl.classList.remove("hide");
@@ -122,7 +124,8 @@ function selectAnswer(e) {
     setStatusClass(button, button.dataset.correct);
   });
   countQuestions++;
-  questStatus.textContent = countQuestions + "/5";
+  statusBar.textContent = countQuestions + "/5";
+  statusBar.style.width = `${(countQuestions / 5) * 100}%`;
   if (correct) {
     countRightAnswers++;
     rightAns.textContent = "Correct Answers: " + countRightAnswers;

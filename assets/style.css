@@ -1,7 +1,7 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+  box-sizing:border-box;
   font-family: monospace;
 }
 
@@ -42,6 +42,20 @@ body {
   padding: 5px 0px 40px 0px;
 }
 
+#question-status {
+  margin-top: 5px;
+  float: right;
+  width: 20rem;
+  height: 2.4rem;
+  border: 0.3rem solid var(--pink);
+}
+
+#progressBar {
+  height: 1.9rem;
+  width: 0%;
+  background-color: var(--pink);
+  color:var(--gray);
+}
 
 #question {
   padding: 0 20px 40px 20px;
