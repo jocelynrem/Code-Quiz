@@ -1,27 +1,33 @@
+var shuffledQuestions, currentQuestionIndex;
 var startButton = document.getElementById("start-btn");
 var questionContainerEl = document.getElementById("question-container");
 var questionEl = document.getElementById("question");
 var answerBtnEl = document.getElementById("answer-buttons");
 var timer = document.getElementById("timer");
 var endMessage = document.getElementById("endMessage");
-var shuffledQuestions, currentQuestionIndex;
-var countRightAnswers = 0;
 var rightAns = document.getElementById("right-answers");
 var score = document.getElementById("score");
+var questStatus = document.getElementById("question-status");
+var countQuestions = 0;
+var countRightAnswers = 0;
 var timeLeft = 30;
 
 //timer and score display all the time
 timer.textContent = "Seconds Remaining: 30";
-rightAns.textContent = "Correct Answers: " + countRightAnswers;
+rightAns.textContent = "Correct Answers: 0";
+questStatus.textContent = "0/5";
 
-//start and restart 
+//start and restart
 function startGame() {
   timeLeft = 30;
+  countQuestions = 0;
   countRightAnswers = 0;
   rightAns.textContent = "Correct Answers: " + countRightAnswers;
+  questStatus.textContent = countQuestions + "/5";
   endMessage.classList.add("hide");
   score.classList.add("hide");
   startButton.classList.add("hide");
+
   shuffledQuestions = questions.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
   questionContainerEl.classList.remove("hide");
@@ -31,7 +37,6 @@ function startGame() {
 
 //countdown timer and interval
 function countDown() {
-
   var timerInterval = setInterval(function () {
     if (timeLeft > 1) {
       timer.textContent = "Seconds Remaining: " + timeLeft;
@@ -58,20 +63,19 @@ answerBtnEl.addEventListener("click", () => {
     }, 1000);
   } else {
     setTimeout(() => {
-    endGame();
-  }, 1000);
+      endGame();
+    }, 1000);
   }
 });
 
-
-//end game 
+//end game
 function endGame() {
   timeLeft = 0;
   questionEl.classList.add("hide");
   answerBtnEl.classList.add("hide");
   endMessage.classList.remove("hide");
   score.classList.remove("hide");
-  
+
   if (countRightAnswers === 5) {
     endMessage.innerText = "Perfect Score!";
   } else {
@@ -117,6 +121,8 @@ function selectAnswer(e) {
   Array.from(answerBtnEl.children).forEach((button) => {
     setStatusClass(button, button.dataset.correct);
   });
+  countQuestions++;
+  questStatus.textContent = countQuestions + "/5";
   if (correct) {
     countRightAnswers++;
     rightAns.textContent = "Correct Answers: " + countRightAnswers;

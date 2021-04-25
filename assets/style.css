@@ -34,19 +34,14 @@ body {
   box-shadow: 0 0 10px 2px;
 }
 
-#right-answers {
+#hud{
   text-align: right;
-  padding: 5px 20px 40px 0px;
   color: var(--pink);
-  font-size: 2.5rem;
+  font-size: 2rem;
+  margin-right: 20px;
+  padding: 5px 0px 40px 0px;
 }
 
-#timer {
-  text-align: right;
-  color: var(--green);
-  margin-right: 20px;
-  font-size: 2.5rem;
-}
 
 #question {
   padding: 0 20px 40px 20px;
