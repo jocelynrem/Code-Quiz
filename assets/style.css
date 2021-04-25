@@ -71,8 +71,23 @@ body {
 #score {
   text-align: center;
   color: black;
-  padding-bottom: 50px;
+  padding-bottom: 10px;
   font-size: 3rem;
+}
+
+input {
+  width: 39%;
+  margin: 3px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  color: var(--pink);
 }
 
 .btn-grid {
@@ -89,7 +104,7 @@ body {
   border-radius: 5px;
   padding: 15px 5px;
   outline: none;
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 .btn:hover {

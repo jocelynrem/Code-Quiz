@@ -1,5 +1,6 @@
 var shuffledQuestions, currentQuestionIndex;
 var startButton = document.getElementById("start-btn");
+var saveButton = document.getElementById("scoreSave")
 var questionContainerEl = document.getElementById("question-container");
 var questionEl = document.getElementById("question");
 var answerBtnEl = document.getElementById("answer-buttons");
@@ -9,6 +10,8 @@ var rightAns = document.getElementById("right-answers");
 var score = document.getElementById("score");
 var questStatus = document.getElementById("question-status");
 var statusBar = document.getElementById('progressBar');
+var scoreForm = document.getElementById('scoreForm');
+var initials = document.getElementById('initials');
 var countQuestions = 0;
 var countRightAnswers = 0;
 var timeLeft = 30;
@@ -27,6 +30,7 @@ function startGame() {
   statusBar.style.width = `0%`;
   rightAns.textContent = "Correct Answers: " + countRightAnswers;
   statusBar.textContent = countQuestions + "/5";
+  scoreForm.classList.add('hide');
   endMessage.classList.add("hide");
   score.classList.add("hide");
   startButton.classList.add("hide");
@@ -69,6 +73,16 @@ answerBtnEl.addEventListener("click", () => {
     }, 1000);
   }
 });
+saveButton.addEventListener("click", saveScore);
+initials.addEventListener('keypress', () => {
+  saveButton.disabled = !initials.value
+});
+
+function saveScore(event) {
+  event.preventDefault();
+  console.log(initials.value);
+ 
+};
 
 //end game
 function endGame() {
@@ -77,6 +91,8 @@ function endGame() {
   answerBtnEl.classList.add("hide");
   endMessage.classList.remove("hide");
   score.classList.remove("hide");
+  scoreForm.classList.remove('hide');
+  localStorage.setItem("mostRecentScore", countRightAnswers);
 
   if (countRightAnswers === 5) {
     endMessage.innerText = "Perfect Score!";
