@@ -12,15 +12,30 @@ var questStatus = document.getElementById("question-status");
 var statusBar = document.getElementById('progressBar');
 var scoreForm = document.getElementById('scoreForm');
 var initials = document.getElementById('initials');
+var recentScoresTitle = document.getElementById('recentScores');
+var recentScoresList = document.getElementById('recentScoresList');
+var highScores = JSON.parse(localStorage.getItem('recentScores'))  || [];
 var countQuestions = 0;
 var countRightAnswers = 0;
 var timeLeft = 30;
 
+recentScoresList.innerHTML = highScores
+  .map(recnScores => {
+  return`<li class="scoreList">${recnScores.initials}: ${recnScores.score}</li>`;
+})
+.join("");
+
+function removeHide (varEl) {
+  (varEl).classList.remove('hide');
+};
+
+function addHide (varEl) {
+  (varEl).classList.add('hide');
+};
 
 //timer and score display all the time
 timer.textContent = "Seconds Remaining: 30";
 rightAns.textContent = "Correct Answers: 0";
-statusBar.textContent = "0/5";
 
 //start and restart
 function startGame() {
@@ -30,15 +45,61 @@ function startGame() {
   statusBar.style.width = `0%`;
   rightAns.textContent = "Correct Answers: " + countRightAnswers;
   statusBar.textContent = countQuestions + "/5";
-  scoreForm.classList.add('hide');
-  endMessage.classList.add("hide");
-  score.classList.add("hide");
-  startButton.classList.add("hide");
   shuffledQuestions = questions.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
-  questionContainerEl.classList.remove("hide");
-  answerBtnEl.classList.remove("hide");
+  addHide(scoreForm);
+  addHide(endMessage);
+  addHide(score);
+  addHide(startButton);
+  removeHide(questStatus);
+  removeHide(questionContainerEl);
+  removeHide(answerBtnEl);
   setNextQuestion();
+}
+
+function saveScore(event) {
+  event.preventDefault();
+  
+  var endScore = {
+    score: countRightAnswers,
+    initials: initials.value,
+  };
+  highScores.push(endScore);
+  highScores.splice(4);
+  localStorage.setItem('recentScores', JSON.stringify(highScores));
+  addHide(endMessage);
+  addHide(score);
+  addHide(scoreForm);
+  removeHide(recentScoresTitle);
+  removeHide(recentScoresList);
+};
+
+console.log('highScores:', highScores)
+
+//end game
+
+/* Still need to:
+save high score with initials
+create a high score function that:
+hides endMessage, score, and form 
+shows the high scores above the restart button 
+when user clicks on save score button */
+
+function endGame() {
+  timeLeft = 0;
+  addHide(questionEl);
+  addHide(answerBtnEl);
+  removeHide(endMessage);
+  removeHide(score);
+  removeHide(scoreForm);
+  removeHide(startButton);
+  if (countRightAnswers === 5) {
+    endMessage.innerText = "Perfect Score!";
+  } else {
+    endMessage.innerText = "Game Over";
+  }
+  score.innerText = "Your score: " + countRightAnswers + " out of 5";
+  startButton.innerText = "Restart";
 }
 
 //countdown timer and interval
@@ -75,34 +136,9 @@ answerBtnEl.addEventListener("click", () => {
 });
 saveButton.addEventListener("click", saveScore);
 initials.addEventListener('keypress', () => {
-  saveButton.disabled = !initials.value
+  saveButton.disabled = !initials.value;
 });
 
-function saveScore(event) {
-  event.preventDefault();
-  console.log(initials.value);
- 
-};
-
-//end game
-function endGame() {
-  timeLeft = 0;
-  questionEl.classList.add("hide");
-  answerBtnEl.classList.add("hide");
-  endMessage.classList.remove("hide");
-  score.classList.remove("hide");
-  scoreForm.classList.remove('hide');
-  localStorage.setItem("mostRecentScore", countRightAnswers);
-
-  if (countRightAnswers === 5) {
-    endMessage.innerText = "Perfect Score!";
-  } else {
-    endMessage.innerText = "Game Over";
-  }
-  score.innerText = "Your score: " + countRightAnswers + " out of 5";
-  startButton.innerText = "Restart";
-  startButton.classList.remove("hide");
-}
 
 //functions that control the gameplay
 function setNextQuestion() {
@@ -164,7 +200,7 @@ function setStatusClass(element, correct) {
 function clearStatusClass(element) {
   element.classList.remove("correct");
   element.classList.remove("wrong");
-  questionEl.classList.remove("hide");
+  removeHide(questionEl);
 }
 
 //quiz questions array

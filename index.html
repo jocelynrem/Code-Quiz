@@ -13,14 +13,16 @@
       <div id="hud">
         <div id="timer"></div>
         <div id="right-answers"></div>
-        <div id="question-status">
+        <div id="question-status" class="hide">
           <div id="progressBar"></div>
         </div>
       </div>
       <div id="question-container" class="hide">
+        <div id="recentScores" class="hide">Recent Scores:</div>
+        <ul id="recentScoresList" class="hide"></ul>
         <div id="endMessage" class="hide"></div>
         <div id="score" class="hide"></div>
-        <form id="scoreForm">
+        <form id="scoreForm" class="hide">
           Save your high score:
           <input
             type="text"
