@@ -1,5 +1,4 @@
 var startButton = document.getElementById("start-btn");
-var nextButton = document.getElementById("next-btn");
 var questionContainerEl = document.getElementById("question-container");
 var questionEl = document.getElementById("question");
 var answerBtnEl = document.getElementById("answer-buttons");
@@ -26,7 +25,6 @@ function startGame() {
   shuffledQuestions = questions.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
   questionContainerEl.classList.remove("hide");
-  nextButton.classList.remove("hide");
   answerBtnEl.classList.remove("hide");
   setNextQuestion();
 }
@@ -52,9 +50,17 @@ function countDown() {
 //click events
 startButton.addEventListener("click", startGame);
 startButton.addEventListener("click", countDown);
-nextButton.addEventListener("click", () => {
-  currentQuestionIndex++;
-  setNextQuestion();
+answerBtnEl.addEventListener("click", () => {
+  if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    setTimeout(() => {
+      currentQuestionIndex++;
+      setNextQuestion();
+    }, 1000);
+  } else {
+    setTimeout(() => {
+    endGame();
+  }, 1000);
+  }
 });
 
 
@@ -62,7 +68,6 @@ nextButton.addEventListener("click", () => {
 function endGame() {
   timeLeft = 0;
   questionEl.classList.add("hide");
-  nextButton.classList.add("hide");
   answerBtnEl.classList.add("hide");
   endMessage.classList.remove("hide");
   score.classList.remove("hide");
@@ -99,7 +104,6 @@ function showQuestion(question) {
 
 function resetState() {
   clearStatusClass(document.body);
-  nextButton.classList.add("hide");
   while (answerBtnEl.firstChild) {
     answerBtnEl.removeChild(answerBtnEl.firstChild);
   }
@@ -119,11 +123,6 @@ function selectAnswer(e) {
   } else {
     timeLeft -= 5;
   }
-  if (shuffledQuestions.length > currentQuestionIndex + 1) {
-    nextButton.classList.remove("hide");
-  } else {
-    endGame();
-  }
 }
 
 //what happens when a user chooses an answer
@@ -131,10 +130,8 @@ function setStatusClass(element, correct) {
   clearStatusClass(element);
   if (correct) {
     element.classList.add("correct");
-    questionEl.classList.add("hide");
   } else {
     element.classList.add("wrong");
-    questionEl.classList.add("hide");
   }
 }
 

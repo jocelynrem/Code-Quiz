@@ -89,16 +89,14 @@ body {
 }
 
 .btn.correct {
-  background-color: var(--pink);
+  background-color: var(--green);
 }
 
 .btn.wrong {
-  background-color: var(--purple);
-  color: var(--purple);
+  background-color: var(--pink);
 }
 
-.start-btn,
-.next-btn {
+.start-btn {
   font-size: 3rem;
   padding: 10px 60px;
   border: black;
